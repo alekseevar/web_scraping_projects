@@ -1,0 +1,23 @@
+#https://www.adamchoi.co.uk/overs/detailed
+
+function main(splash, args)
+  --splash:set_user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.41")
+  --[[headers = {['User-Agent']="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.41"}
+  splash:set_custom_headers(headers)--]]
+  
+  --[[splash:on_request(function(request)
+    request:set_header('User-Agent', "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.41")
+    end)]]--
+  splash.private_mode_enable = false
+  url = args.url
+  assert(splash:go(url))
+  assert(splash:wait(5))
+  all_matches = splash:select_all("label.btn.btn-sm.btn-primary")
+  all_matches[2]:mouse_click()
+  assert(splash:wait(5))
+	splash:set_viewport_full()
+  return{
+    splash:png(),
+    splash:html(),  
+  }
+end

@@ -1,0 +1,20 @@
+# http://amazon.com
+function main(splash, args)
+  url = args.url
+  assert(splash:go(url))
+  assert(splash:wait(2))
+  
+  imput_box = assert(splash:select("#twotabsearchtextbox"))
+  imput_box:focus()
+  imput_box:send_text("books")
+  assert(splash:wait(2))
+  
+  button = assert(splash:select("#nav-search-submit-button"))
+  button:mouse_click()
+  assert(splash:wait(5))
+  
+  return {
+    html = splash:html(),
+    png = splash:png(),
+  }
+end
